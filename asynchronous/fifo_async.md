@@ -36,8 +36,6 @@ This is a critical component for **Clock Domain Crossing (CDC)**, preventing met
 To safely pass pointers between domains, binary counters are converted to **Gray Code**.
 * **Why Gray Code?** Only **one bit changes** at a time. This prevents "bus skew" where a multi-bit binary change (e.g., `0111` to `1000`) could be sampled incorrectly by the destination clock if bits arrive at slightly different times.
 
-
-
 ### 3. 2-Stage Synchronizers
 * Used to sample the Gray-coded pointer from the "opposite" domain.
 * Two flip-flops in series allow metastable signals to settle before they reach the comparison logic.
@@ -79,11 +77,13 @@ To safely pass pointers between domains, binary counters are converted to **Gray
 ---
 
 ## Verification Strategy
-The design is verified using a high-fidelity testbench in **Aldec Riviera-PRO**, featuring:
+The design is verified using a high-fidelity testbench, featuring:
 * **Asynchronous Clock Generation:** Independent frequencies for `wr_clk` (100MHz) and `rd_clk` (40MHz).
 * **Latency Modeling:** Accounts for the 3–4 cycle delay required for pointer synchronization.
 * **Timeout Protection:** Safety mechanisms to prevent simulation hangs during CDC failures.
 * **Self-Checking Monitor:** Automatic data comparison against a SystemVerilog reference queue.
+
+* A better and improved version of testbench will soon be done and verified
 
 ---
 
